@@ -33,12 +33,19 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-he
 .btn-wa{background:#25D366;border-color:#25D366;color:#fff}
 .btn-primary{background:var(--accent);color:#0a0a0f;border-color:var(--accent)}
 
-/* TABS - scrollable */
-.tabs-wrap{margin-top:14px;border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.tabs-wrap::-webkit-scrollbar{display:none}
-.tabs{display:flex;padding:0 16px;width:max-content;min-width:100%}
-.tab{padding:10px 14px;cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;min-height:var(--tap);display:flex;align-items:center;gap:5px}
-.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+/* TABS - 2x2 grid on mobile */
+.tabs-wrap{margin-top:14px;border-bottom:1px solid var(--border)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;padding:0}
+.tab{padding:12px 8px;cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);border-bottom:2px solid transparent;min-height:var(--tap);display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;border-right:1px solid var(--border)}
+.tab:nth-child(2n){border-right:none}
+.tab:nth-child(1),.tab:nth-child(2){border-bottom:1px solid var(--border)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(232,255,60,0.04)}
+@media(min-width:600px){
+  .tabs{display:flex;padding:0 24px}
+  .tab{border-right:none;border-bottom:2px solid transparent;justify-content:flex-start}
+  .tab:nth-child(1),.tab:nth-child(2){border-bottom:2px solid transparent}
+  .tab.active{border-bottom-color:var(--accent)}
+}
 
 /* CONTENT */
 .content{padding:14px 16px 80px;max-width:600px;margin:0 auto}
@@ -70,17 +77,18 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-he
 
 /* MATCH ROWS */
 .match-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}
-.match-date-bar{font-size:9px;color:var(--muted);font-family:'Space Mono',monospace;padding:5px 12px;background:var(--surface2);letter-spacing:0.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
-.match-row{display:flex;align-items:center;padding:10px 12px;gap:8px}
-.match-team{flex:1;font-size:13px;font-weight:500}
+.match-date-bar{font-size:10px;color:var(--accent);font-family:'Space Mono',monospace;padding:6px 12px;background:rgba(232,255,60,0.06);letter-spacing:0.06em;text-transform:uppercase;border-bottom:1px solid var(--border);font-weight:700}
+.match-row{display:flex;align-items:center;padding:12px 12px;gap:6px;border-bottom:1px solid rgba(42,42,58,0.5)}
+.match-row:last-child{border-bottom:none}
+.match-team{flex:1;font-size:14px;font-weight:500;color:var(--text)}
 .match-team.away{text-align:right}
-.match-team.win{font-weight:700;color:var(--accent)}
-.match-score{display:flex;align-items:center;gap:4px;flex-shrink:0}
-.si{width:36px;height:36px;text-align:center;border:1px solid var(--border);border-radius:6px;font-size:15px;background:var(--surface2);color:var(--text);font-family:'Space Mono',monospace;-webkit-appearance:none;appearance:none}
+.match-team.win{font-weight:800;color:var(--accent)}
+.match-score{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.si{width:40px;height:40px;text-align:center;border:2px solid #3a3a50;border-radius:8px;font-size:17px;font-weight:700;background:#1c1c28;color:#f0f0f8;font-family:'Space Mono',monospace;-webkit-appearance:none;appearance:none}
 .si:focus{outline:none;border-color:var(--accent);background:rgba(232,255,60,0.05)}
-.si.done{border-color:rgba(60,255,184,0.5);background:rgba(60,255,184,0.07);color:var(--green)}
+.si.done{border-color:rgba(60,255,184,0.5);background:rgba(60,255,184,0.07);color:var(--green);font-weight:800}
 .si::-webkit-inner-spin-button,.si::-webkit-outer-spin-button{-webkit-appearance:none}
-.sep{color:var(--muted);font-size:13px;font-weight:700}
+.sep{color:var(--muted);font-size:16px;font-weight:700}
 .match-status{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;font-family:'Space Mono',monospace;white-space:nowrap}
 .ms-done{background:rgba(60,255,184,0.15);color:var(--green)}
 .ms-pend{background:rgba(255,255,255,0.06);color:var(--muted)}
@@ -110,7 +118,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-he
 /* FILTER BAR */
 .fb{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;scrollbar-width:none}
 .fb::-webkit-scrollbar{display:none}
-.fb button,.fb select{flex-shrink:0;height:34px;padding:0 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:12px;font-family:'Syne',sans-serif;font-weight:600;-webkit-appearance:none;appearance:none}
+.fb button,.fb select{flex-shrink:0;height:34px;padding:0 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-size:12px;font-family:'Syne',sans-serif;font-weight:600;-webkit-appearance:none;appearance:none}
 .fb button.act{background:rgba(232,255,60,0.12);color:var(--accent);border-color:rgba(232,255,60,0.4)}
 .fb select{color:var(--text);padding-right:20px}
 
@@ -135,12 +143,12 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-he
 /* DESKTOP */
 @media(min-width:600px){
   .header{padding:20px 24px 0}
-  .tabs{padding:0 24px}
   .content{padding:20px 24px 40px}
   .stats-grid{grid-template-columns:repeat(3,1fr)}
   .stats-grid-4{grid-template-columns:repeat(4,1fr)}
   .logo-title{font-size:22px}
   .btn{font-size:13px}
+  .tabs-wrap{border-bottom:1px solid var(--border)}
 }
 </style>
 </head>
@@ -212,6 +220,34 @@ const GUILLE_GRUPOS={
   L:{Inglaterra:1,Croacia:4,Ghana:2,Panama:3}
 };
 
+const SANTI_GRUPOS={
+  A:{Mexico:2,Sudafrica:3,'Corea del Sur':4,Chequia:1},
+  B:{Canada:1,'Bosnia y Herzegovina':3,Qatar:4,Suiza:2},
+  C:{Brasil:1,Marruecos:3,Haiti:4,Escocia:2},
+  D:{'Estados Unidos':2,Paraguay:4,Australia:1,Turquia:3},
+  E:{Alemania:1,Curazao:4,'Costa de Marfil':3,Ecuador:2},
+  F:{'Paises Bajos':1,Japon:2,Suecia:3,Tunez:4},
+  G:{Belgica:1,Egipto:2,Iran:3,'Nueva Zelanda':4},
+  H:{Espana:1,'Cabo Verde':4,'Arabia Saudi':3,Uruguay:2},
+  I:{Francia:1,Senegal:3,Noruega:2,Irak:4},
+  J:{Argentina:1,Argelia:3,Austria:2,Jordania:4},
+  K:{Portugal:1,Uzbekistan:2,Colombia:4,'RD Congo':3},
+  L:{Inglaterra:1,Croacia:2,Ghana:4,Panama:3}
+};
+const KIKE_GRUPOS={
+  A:{Mexico:3,Sudafrica:4,'Corea del Sur':2,Chequia:1},
+  B:{Canada:2,'Bosnia y Herzegovina':3,Qatar:4,Suiza:1},
+  C:{Brasil:1,Marruecos:3,Haiti:4,Escocia:2},
+  D:{'Estados Unidos':1,Paraguay:2,Australia:4,Turquia:3},
+  E:{Alemania:1,Curazao:4,'Costa de Marfil':3,Ecuador:2},
+  F:{'Paises Bajos':1,Japon:2,Suecia:3,Tunez:4},
+  G:{Belgica:1,Egipto:2,Iran:4,'Nueva Zelanda':3},
+  H:{Espana:1,'Cabo Verde':4,'Arabia Saudi':3,Uruguay:2},
+  I:{Francia:1,Senegal:3,Noruega:2,Irak:4},
+  J:{Argentina:1,Argelia:3,Austria:2,Jordania:4},
+  K:{Portugal:2,Uzbekistan:4,Colombia:1,'RD Congo':3},
+  L:{Inglaterra:1,Croacia:2,Ghana:3,Panama:4}
+};
 const MATCHES=[
   {id:'M001',g:'A',date:'2026-06-11',home:'Mexico',away:'Sudafrica'},
   {id:'M002',g:'A',date:'2026-06-11',home:'Corea del Sur',away:'Chequia'},
@@ -316,12 +352,14 @@ function parsePred(s){
   return{h:isNaN(h)?null:h,a:isNaN(a)?null:a};
 }
 
-let S=JSON.parse(localStorage.getItem('porra26v6')||'{}');
+let S=JSON.parse(localStorage.getItem('porra26v9')||'{}');
 if(!S.results)S.results={};
 if(!S.preds)S.preds={};
 if(!S.grupoPreds)S.grupoPreds={};
 if(!S.grupoReal)S.grupoReal={};
 if(!S.lastSync)S.lastSync=null;
+let fSt='all',fGr='all';
+let selPGlobal='javi';
 
 PLAYERS.forEach(pl=>{
   if(!S.preds[pl.id])S.preds[pl.id]={};
@@ -335,7 +373,7 @@ PLAYERS.forEach(pl=>{
   // Cargar pronósticos de grupo por defecto
   Object.keys(GROUPS).forEach(g=>{
     if(S.grupoPreds[pl.id][g]!==undefined)return;
-    let src=pl.id==='javi'?JAVI_GRUPOS:pl.id==='guille'?GUILLE_GRUPOS:null;
+    let src=pl.id==='javi'?JAVI_GRUPOS:pl.id==='santi'?SANTI_GRUPOS:pl.id==='kike'?KIKE_GRUPOS:pl.id==='guille'?GUILLE_GRUPOS:null;
     S.grupoPreds[pl.id][g]=src?{...src[g]}:{};
   });
 });
@@ -432,7 +470,7 @@ async function syncSheet(){
     });
 
     S.lastSync=new Date().toISOString();
-    localStorage.setItem('porra26v6',JSON.stringify(S));
+    localStorage.setItem('porra26v9',JSON.stringify(S));
     dot.className='sync-dot ok';
     const t=new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
     const nPart=Object.keys(S.results).length;
@@ -597,10 +635,9 @@ function renderPart(){
 function setFS(v){fSt=v;renderPart()}
 function setFG(v){fGr=v;renderPart()}
 
-let selP='javi';
 function renderDet(){
-  let h=`<div class="pnb">${PLAYERS.map(p=>`<button class="${selP===p.id?'act':''}" onclick="selPart('${p.id}')">${p.name}</button>`).join('')}</div>`;
-  const pl=PLAYERS.find(x=>x.id===selP);
+  let h=`<div class="pnb">${PLAYERS.map(p=>`<button class="${selPGlobal===p.id?'act':''}" onclick="selPart('${p.id}')">${p.name}</button>`).join('')}</div>`;
+  const pl=PLAYERS.find(x=>x.id===selPGlobal);
   const s=totalStats(pl.id);
   const hasPreds=MATCHES.some(m=>{const p=getP(pl.id,m.id);return p.h!==null&&p.a!==null;});
   if(!hasPreds)h+=`<div style="padding:20px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:10px;margin-bottom:12px;font-size:13px">⚠️ ${pl.name} sin pronósticos aún</div>`;
@@ -635,53 +672,65 @@ function renderDet(){
   document.getElementById('det').innerHTML=h;
 }
 
-function selPart(id){selP=id;renderDet();}
+function selPart(id){selPGlobal=id;renderDet();}
 
 function renderGrupo(){
-  let h=`<p style="font-size:11px;color:var(--muted);margin-bottom:12px">Introduce el orden final real y los pronósticos. <strong style="color:var(--text)">+1 punto</strong> por cada posición acertada.</p>`;
+  let h=`<p style="font-size:11px;color:var(--muted);margin-bottom:12px">Introduce el orden final real. <strong style="color:var(--text)">+1 punto</strong> por cada posición acertada.</p>`;
   'ABCDEFGHIJKL'.split('').forEach(g=>{
     const teams=GROUPS[g];
-    h+=`<div class="card" style="margin-bottom:10px"><div class="card-header">Grupo ${g}</div>
-    <div style="padding:8px 12px">
-      <div class="grupo-grid">
-        <div class="gh">Equipo</div>
-        <div class="gh">Real</div>
-        ${PLAYERS.map(p=>`<div class="gh">${p.name[0]}</div>`).join('')}
-      </div>`;
+    h+=`<div class="card" style="margin-bottom:10px">
+    <div class="card-header">Grupo ${g}</div>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table style="width:100%;border-collapse:collapse;min-width:320px">
+      <thead><tr>
+        <th style="text-align:left;padding:7px 12px;font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;border-bottom:1px solid var(--border);white-space:nowrap">Equipo</th>
+        <th style="text-align:center;padding:7px 8px;font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;border-bottom:1px solid var(--border)">Real</th>
+        ${PLAYERS.map(p=>`<th style="text-align:center;padding:7px 8px;font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;border-bottom:1px solid var(--border)">${p.name}</th>`).join('')}
+        <th style="text-align:center;padding:7px 8px;font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;border-bottom:1px solid var(--border)">Pts</th>
+      </tr></thead>
+      <tbody>`;
     teams.forEach(eq=>{
       const realPos=(S.grupoReal[g]||{})[eq]||'';
-      h+=`<div class="grupo-grid">
-        <div class="gr" style="font-size:11px;font-weight:500;padding-left:0">${eq}</div>
-        <div class="gr" style="justify-content:center">
-          <select onchange="setGrupoReal('${g}','${eq}',this.value)" style="width:36px;height:28px;text-align:center;border:1px solid var(--border);border-radius:5px;background:var(--surface2);color:var(--text);font-size:11px;font-family:'Space Mono',monospace;-webkit-appearance:none">
+      h+=`<tr>
+        <td style="padding:7px 12px;font-size:12px;font-weight:500;border-bottom:1px solid rgba(42,42,58,0.4);white-space:nowrap">${eq}</td>
+        <td style="text-align:center;padding:5px 8px;border-bottom:1px solid rgba(42,42,58,0.4)">
+          <select onchange="setGrupoReal('${g}','${eq}',this.value)" style="width:38px;height:30px;text-align:center;border:1px solid var(--border);border-radius:5px;background:var(--surface2);color:var(--text);font-size:12px;font-family:'Space Mono',monospace;-webkit-appearance:none;padding:0 4px">
             <option value="">—</option>
-            ${[1,2,3,4].map(n=>`<option value="${n}"${realPos==n?' selected':''}>${n}</option>`).join('')}
+            ${[1,2,3,4].map(n=>`<option value="${n}"${realPos==n?' selected':''}>${n}º</option>`).join('')}
           </select>
-        </div>
+        </td>
         ${PLAYERS.map(p=>{
           const predPos=(S.grupoPreds[p.id]?.[g]||{})[eq]||'';
           const rp=(S.grupoReal[g]||{})[eq];
           const hit=rp&&predPos&&parseInt(rp)===parseInt(predPos);
-          const borderColor=rp?(hit?'rgba(60,255,184,0.5)':'rgba(255,92,92,0.4)'):'var(--border)';
-          return`<div class="gr" style="justify-content:center">
-            <select onchange="setGrupoPred('${p.id}','${g}','${eq}',this.value)" style="width:36px;height:28px;text-align:center;border:1px solid ${borderColor};border-radius:5px;background:${hit?'rgba(60,255,184,0.08)':'var(--surface2)'};color:var(--text);font-size:11px;font-family:'Space Mono',monospace;-webkit-appearance:none">
+          const bc=rp?(hit?'rgba(60,255,184,0.4)':'rgba(255,92,92,0.3)'):'var(--border)';
+          return`<td style="text-align:center;padding:5px 8px;border-bottom:1px solid rgba(42,42,58,0.4)">
+            <select onchange="setGrupoPred('${p.id}','${g}','${eq}',this.value)" style="width:38px;height:30px;text-align:center;border:1px solid ${bc};border-radius:5px;background:${hit?'rgba(60,255,184,0.08)':'var(--surface2)'};color:${hit?'var(--green)':'var(--text)'};font-size:12px;font-family:'Space Mono',monospace;-webkit-appearance:none;padding:0 4px">
               <option value="">—</option>
-              ${[1,2,3,4].map(n=>`<option value="${n}"${predPos==n?' selected':''}>${n}</option>`).join('')}
+              ${[1,2,3,4].map(n=>`<option value="${n}"${predPos==n?' selected':''}>${n}º</option>`).join('')}
             </select>
-          </div>`;
+          </td>`;
         }).join('')}
-      </div>`;
+        <td style="text-align:center;padding:5px 8px;border-bottom:1px solid rgba(42,42,58,0.4)">
+          ${PLAYERS.map(p=>{
+            const rp=(S.grupoReal[g]||{})[eq];
+            const pp=(S.grupoPreds[p.id]?.[g]||{})[eq];
+            const hit=rp&&pp&&parseInt(rp)===parseInt(pp);
+            return rp?`<span class="badge ${hit?'bg':'br'}" style="margin:1px">${hit?'+1':'0'}</span>`:'';
+          }).join('')}
+        </td>
+      </tr>`;
     });
-    // Totals row
-    h+=`<div style="display:flex;align-items:center;padding:6px 0 2px;border-top:1px solid var(--border);margin-top:4px;gap:4px">
-      <span style="flex:1;font-size:9px;color:var(--muted);font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.06em">Total grupo</span>
-      <span style="width:36px"></span>
+    // Total row
+    h+=`<tr style="background:rgba(255,255,255,0.02)">
+      <td colspan="2" style="padding:7px 12px;font-size:9px;color:var(--muted);font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.06em">Total grupo ${g}</td>
       ${PLAYERS.map(p=>{
         const gp=calcGrupoPts(p.id,g);
-        return`<span style="width:36px;text-align:center"><span class="badge" style="background:rgba(232,255,60,0.1);color:var(--accent);font-size:10px">${gp!==null?'+'+gp:'—'}</span></span>`;
+        return`<td style="text-align:center;padding:7px 8px"><span class="badge" style="background:rgba(232,255,60,0.12);color:var(--accent)">${gp!==null?'+'+gp:'—'}</span></td>`;
       }).join('')}
-    </div>
-    </div></div>`;
+      <td></td>
+    </tr>`;
+    h+=`</tbody></table></div></div>`;
   });
   document.getElementById('grupo').innerHTML=h;
 }
@@ -689,25 +738,25 @@ function renderGrupo(){
 function setGrupoReal(g,eq,val){
   if(!S.grupoReal[g])S.grupoReal[g]={};
   S.grupoReal[g][eq]=val===''?null:parseInt(val);
-  localStorage.setItem('porra26v6',JSON.stringify(S));refresh();
+  localStorage.setItem('porra26v9',JSON.stringify(S));refresh();
 }
 function setGrupoPred(pid,g,eq,val){
   if(!S.grupoPreds[pid])S.grupoPreds[pid]={};
   if(!S.grupoPreds[pid][g])S.grupoPreds[pid][g]={};
   S.grupoPreds[pid][g][eq]=val===''?null:parseInt(val);
-  localStorage.setItem('porra26v6',JSON.stringify(S));refresh();
+  localStorage.setItem('porra26v9',JSON.stringify(S));refresh();
 }
 
 function setR(id,side,val){
   if(!S.results[id])S.results[id]={h:null,a:null};
   S.results[id][side]=val===''?null:parseInt(val);
-  localStorage.setItem('porra26v6',JSON.stringify(S));refresh();
+  localStorage.setItem('porra26v9',JSON.stringify(S));refresh();
 }
 function setP(pid,mid,side,val){
   if(!S.preds[pid])S.preds[pid]={};
   if(!S.preds[pid][mid])S.preds[pid][mid]={h:null,a:null};
   S.preds[pid][mid][side]=val===''?null:parseInt(val);
-  localStorage.setItem('porra26v6',JSON.stringify(S));refresh();
+  localStorage.setItem('porra26v9',JSON.stringify(S));refresh();
 }
 function refresh(){
   const ai=[...document.querySelectorAll('.tab')].findIndex(t=>t.classList.contains('active'));
@@ -719,7 +768,7 @@ function showTab(name){
   document.getElementById(name).classList.add('active');
   if(name==='clas')renderClas();if(name==='part')renderPart();if(name==='det')renderDet();if(name==='grupo')renderGrupo();
 }
-function saveLocal(){localStorage.setItem('porra26v6',JSON.stringify(S));showToast('✓ Guardado');}
+function saveLocal(){localStorage.setItem('porra26v9',JSON.stringify(S));showToast('✓ Guardado');}
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
 
 renderClas();
