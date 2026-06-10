@@ -2,79 +2,145 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Porra Mundial 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c26;--border:#2a2a3a;
-  --accent:#e8ff3c;--accent2:#3cffb8;--text:#f0f0f8;--muted:#6b6b80;
+  --accent:#e8ff3c;--text:#f0f0f8;--muted:#6b6b80;
   --green:#3cffb8;--blue:#3cb8ff;--red:#ff5c5c;--gold:#ffb83c;
+  --tap:44px;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{font-size:14px}
-body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh}
-.header{padding:20px 24px 0;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.logo-title{font-size:22px;font-weight:800;letter-spacing:-0.5px;line-height:1}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{font-size:14px;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+
+/* HEADER */
+.header{padding:16px 16px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.logo-title{font-size:20px;font-weight:800;letter-spacing:-0.5px;line-height:1.1}
 .logo-title span{color:var(--accent)}
-.logo-sub{font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.05em;margin-top:3px}
-.header-btns{display:flex;gap:8px}
-.btn{padding:7px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:12px;font-family:'Syne',sans-serif;font-weight:600;display:flex;align-items:center;gap:6px;transition:all 0.15s}
-.btn:hover{border-color:var(--accent);color:var(--accent)}
-.btn-primary{background:var(--accent);color:#0a0a0f;border-color:var(--accent)}
-.btn-primary:hover{background:#d4eb00}
-.sync-status{font-size:11px;font-family:'Space Mono',monospace;color:var(--muted);padding:4px 0 0;display:flex;align-items:center;gap:6px}
+.logo-sub{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:0.03em}
+.sync-status{font-size:10px;color:var(--muted);padding:3px 0 0;display:flex;align-items:center;gap:5px;font-family:'Space Mono',monospace}
 .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0}
 .sync-dot.ok{background:var(--green)}.sync-dot.loading{background:var(--gold);animation:blink 0.8s infinite}.sync-dot.err{background:var(--red)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-.tabs{display:flex;padding:20px 24px 0;border-bottom:1px solid var(--border)}
-.tab{padding:10px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap}
+.header-btns{display:flex;gap:6px;flex-shrink:0}
+.btn{height:var(--tap);padding:0 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:12px;font-family:'Syne',sans-serif;font-weight:700;display:flex;align-items:center;gap:5px;white-space:nowrap;transition:opacity 0.15s;-webkit-appearance:none}
+.btn:active{opacity:0.7}
+.btn-wa{background:#25D366;border-color:#25D366;color:#fff}
+.btn-primary{background:var(--accent);color:#0a0a0f;border-color:var(--accent)}
+
+/* TABS - scrollable */
+.tabs-wrap{margin-top:14px;border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs-wrap::-webkit-scrollbar{display:none}
+.tabs{display:flex;padding:0 16px;width:max-content;min-width:100%}
+.tab{padding:10px 14px;cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;min-height:var(--tap);display:flex;align-items:center;gap:5px}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-.tab:hover:not(.active){color:var(--text)}
-.content{padding:20px 24px;max-width:960px}
+
+/* CONTENT */
+.content{padding:14px 16px 80px;max-width:600px;margin:0 auto}
 .screen{display:none}.screen.active{display:block}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.stats-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
-.stat-label{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.08em;margin-bottom:6px;text-transform:uppercase}
-.stat-value{font-size:22px;font-weight:700;line-height:1}
-.stat-value small{font-size:13px;color:var(--muted);font-weight:400}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:12px}
-.card-header{padding:10px 14px;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace}
-table{width:100%;border-collapse:collapse}
-th{font-size:10px;font-weight:700;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);letter-spacing:0.06em;text-transform:uppercase;font-family:'Space Mono',monospace}
-td{padding:9px 12px;border-bottom:1px solid rgba(42,42,58,0.6);font-size:13px;vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(255,255,255,0.02)}
-.badge{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;font-family:'Space Mono',monospace;white-space:nowrap}
+
+/* STAT CARDS */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.stats-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stats-grid-4{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.stat-label{font-size:9px;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.08em;margin-bottom:5px;text-transform:uppercase}
+.stat-value{font-size:20px;font-weight:800;line-height:1}
+.stat-value small{font-size:12px;color:var(--muted);font-weight:400}
+.stat-value.sm{font-size:13px;padding-top:2px;font-weight:600}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.card-header{padding:8px 12px;font-size:9px;font-weight:700;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace}
+
+/* RANKING TABLE */
+.rank-table{width:100%}
+.rank-row{display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(42,42,58,0.5);gap:8px}
+.rank-row:last-child{border-bottom:none}
+.rank-pos{font-size:16px;width:28px;flex-shrink:0;text-align:center}
+.rank-name{flex:1;font-weight:600;font-size:14px}
+.rank-pts{font-size:20px;font-weight:800;text-align:right;min-width:36px}
+.rank-detail{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px}
+.rank-diff{font-size:10px;color:var(--muted);margin-left:4px}
+
+/* MATCH ROWS */
+.match-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.match-date-bar{font-size:9px;color:var(--muted);font-family:'Space Mono',monospace;padding:5px 12px;background:var(--surface2);letter-spacing:0.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.match-row{display:flex;align-items:center;padding:10px 12px;gap:8px}
+.match-team{flex:1;font-size:13px;font-weight:500}
+.match-team.away{text-align:right}
+.match-team.win{font-weight:700;color:var(--accent)}
+.match-score{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.si{width:36px;height:36px;text-align:center;border:1px solid var(--border);border-radius:6px;font-size:15px;background:var(--surface2);color:var(--text);font-family:'Space Mono',monospace;-webkit-appearance:none;appearance:none}
+.si:focus{outline:none;border-color:var(--accent);background:rgba(232,255,60,0.05)}
+.si.done{border-color:rgba(60,255,184,0.5);background:rgba(60,255,184,0.07);color:var(--green)}
+.si::-webkit-inner-spin-button,.si::-webkit-outer-spin-button{-webkit-appearance:none}
+.sep{color:var(--muted);font-size:13px;font-weight:700}
+.match-status{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;font-family:'Space Mono',monospace;white-space:nowrap}
+.ms-done{background:rgba(60,255,184,0.15);color:var(--green)}
+.ms-pend{background:rgba(255,255,255,0.06);color:var(--muted)}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;font-family:'Space Mono',monospace;white-space:nowrap}
 .bg{background:rgba(60,255,184,0.15);color:var(--green)}
 .bb{background:rgba(60,184,255,0.15);color:var(--blue)}
 .br{background:rgba(255,92,92,0.15);color:var(--red)}
 .bk{background:rgba(255,255,255,0.06);color:var(--muted)}
 .bgold{background:rgba(255,184,60,0.15);color:var(--gold)}
-.si{width:34px;text-align:center;border:1px solid var(--border);border-radius:5px;padding:4px 2px;font-size:13px;background:var(--surface2);color:var(--text);font-family:'Space Mono',monospace}
-.si:focus{outline:none;border-color:var(--accent)}
-.si.done{border-color:rgba(60,255,184,0.4);background:rgba(60,255,184,0.06)}
-.si::-webkit-inner-spin-button,.si::-webkit-outer-spin-button{-webkit-appearance:none}
-.fb{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
-.fb button,.fb select{padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:11px;font-family:'Syne',sans-serif;font-weight:600;transition:all 0.15s}
-.fb button.act{background:rgba(232,255,60,0.12);color:var(--accent);border-color:rgba(232,255,60,0.4)}
-.fb select{color:var(--text)}.fb select option{background:var(--surface)}
-.pnb{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.pnb button{padding:6px 16px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:13px;font-weight:600;font-family:'Syne',sans-serif;transition:all 0.15s}
+
+/* DETALLE */
+.pnb{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;scrollbar-width:none}
+.pnb::-webkit-scrollbar{display:none}
+.pnb button{flex-shrink:0;height:36px;padding:0 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:13px;font-weight:700;font-family:'Syne',sans-serif;-webkit-appearance:none}
 .pnb button.act{background:rgba(232,255,60,0.12);color:var(--accent);border-color:rgba(232,255,60,0.4)}
-.pts-big{font-size:18px;font-weight:800}
-.empty-state{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:8px;margin-bottom:14px}
-.legend{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
-.legend-item strong{color:var(--text)}
-.toast{position:fixed;bottom:20px;right:20px;background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:8px;font-size:12px;font-family:'Space Mono',monospace;opacity:0;transition:opacity 0.25s;pointer-events:none;z-index:9999}
+
+/* DETALLE MATCH ROW */
+.det-row{display:flex;align-items:center;padding:9px 12px;border-bottom:1px solid rgba(42,42,58,0.5);gap:6px}
+.det-row:last-child{border-bottom:none}
+.det-match{flex:1;font-size:11px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.det-real{font-size:12px;font-weight:700;font-family:'Space Mono',monospace;min-width:36px;text-align:center;color:var(--text)}
+.det-pred{display:flex;align-items:center;gap:3px;flex-shrink:0}
+.det-pts{flex-shrink:0;min-width:36px;text-align:right}
+
+/* FILTER BAR */
+.fb{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;scrollbar-width:none}
+.fb::-webkit-scrollbar{display:none}
+.fb button,.fb select{flex-shrink:0;height:34px;padding:0 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:12px;font-family:'Syne',sans-serif;font-weight:600;-webkit-appearance:none;appearance:none}
+.fb button.act{background:rgba(232,255,60,0.12);color:var(--accent);border-color:rgba(232,255,60,0.4)}
+.fb select{color:var(--text);padding-right:20px}
+
+/* GRUPOS TABLE */
+.grupo-grid{display:grid;grid-template-columns:1fr repeat(4,40px);gap:0;font-size:12px}
+.grupo-grid .gh{font-size:9px;font-family:'Space Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;text-align:center;padding:4px 2px;border-bottom:1px solid var(--border)}
+.grupo-grid .gh:first-child{text-align:left}
+.grupo-grid .gr{padding:7px 4px;border-bottom:1px solid rgba(42,42,58,0.4);display:flex;align-items:center}
+.grupo-grid .gr:nth-last-child(-n+5){border-bottom:none}
+.grupo-grid select{width:36px;height:28px;text-align:center;border:1px solid var(--border);border-radius:5px;background:var(--surface2);color:var(--text);font-size:11px;font-family:'Space Mono',monospace;-webkit-appearance:none;padding:0 2px}
+
+/* LEGEND */
+.legend{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:14px}
+.legend-title{font-size:9px;font-weight:700;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.legend-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+
+/* TOAST */
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:10px 20px;border-radius:20px;font-size:12px;font-family:'Space Mono',monospace;opacity:0;transition:opacity 0.25s;pointer-events:none;z-index:9999;white-space:nowrap}
 .toast.show{opacity:1}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-@media(max-width:600px){
-  .stats-grid,.stats-grid-4{grid-template-columns:1fr 1fr}
-  .header{flex-direction:column;align-items:flex-start}
-  .content,.tabs{padding-left:14px;padding-right:14px}
+
+/* DESKTOP */
+@media(min-width:600px){
+  .header{padding:20px 24px 0}
+  .tabs{padding:0 24px}
+  .content{padding:20px 24px 40px}
+  .stats-grid{grid-template-columns:repeat(3,1fr)}
+  .stats-grid-4{grid-template-columns:repeat(4,1fr)}
+  .logo-title{font-size:22px}
+  .btn{font-size:13px}
 }
 </style>
 </head>
@@ -83,21 +149,23 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 <div class="header">
   <div>
     <div class="logo-title">Porra <span>Mundial 2026</span></div>
-    <div class="logo-sub">Javi · Santi · Kike · Guille · Fase de grupos</div>
+    <div class="logo-sub">Javi · Santi · Kike · Guille</div>
     <div class="sync-status"><div class="sync-dot" id="syncDot"></div><span id="syncMsg">Sin sincronizar</span></div>
   </div>
   <div class="header-btns">
-    <button class="btn" onclick="syncSheet()">↻ Sync Sheet</button>
-    <button class="btn" onclick="sendWhatsApp()" style="background:#25D366;border-color:#25D366;color:#fff">📲 WhatsApp</button>
-    <button class="btn btn-primary" onclick="saveLocal()">✓ Guardar</button>
+    <button class="btn" onclick="syncSheet()">↻ Sync</button>
+    <button class="btn btn-wa" onclick="sendWhatsApp()">📲</button>
+    <button class="btn btn-primary" onclick="saveLocal()">✓</button>
   </div>
 </div>
 
-<div class="tabs">
-  <div class="tab active" onclick="showTab('clas')">🏆 Clasificación</div>
-  <div class="tab" onclick="showTab('part')">⚽ Resultados</div>
-  <div class="tab" onclick="showTab('det')">📋 Detalle</div>
-  <div class="tab" onclick="showTab('grupo')">📊 Grupos</div>
+<div class="tabs-wrap">
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('clas')">🏆 Clasificación</div>
+    <div class="tab" onclick="showTab('part')">⚽ Resultados</div>
+    <div class="tab" onclick="showTab('det')">📋 Detalle</div>
+    <div class="tab" onclick="showTab('grupo')">📊 Grupos</div>
+  </div>
 </div>
 
 <div class="content">
@@ -450,46 +518,47 @@ function renderClas(){
   const sc=PLAYERS.map(p=>({...p,...totalStats(p.id)})).sort((a,b)=>b.t-a.t||b.e-a.e);
   const pl=playedCount();
   let h=`<div class="legend">
-    <span style="font-size:11px;font-weight:700;color:var(--muted);font-family:'Space Mono',monospace;margin-right:4px">PUNTUACIÓN:</span>
-    <div class="legend-item"><span class="badge bgold">+4</span><span>Exacto (incluye +1X2 +dif)</span></div>
-    <div class="legend-item"><span class="badge bg">+3</span><span>1X2 + diferencia + no exacto</span></div>
-    <div class="legend-item"><span class="badge bb">+2</span><span>Solo 1X2 + exacto sin 1X2</span></div>
-    <div class="legend-item"><span class="badge bb">+1</span><span>Solo 1X2 o solo diferencia</span></div>
-    <div class="legend-item"><span class="badge bg" style="background:rgba(232,255,60,0.15);color:var(--accent)">+1</span><span>Por posición de grupo acertada</span></div>
+    <div class="legend-title">Sistema de puntos</div>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="badge bgold">+4</span> Marcador exacto</div>
+      <div class="legend-item"><span class="badge bg">+3</span> 1X2 + diferencia</div>
+      <div class="legend-item"><span class="badge bb">+1/+2</span> 1X2 o diferencia</div>
+      <div class="legend-item"><span class="badge" style="background:rgba(232,255,60,0.12);color:var(--accent)">+1</span> Pos. grupo</div>
+    </div>
   </div>
-  <div class="stats-grid">
-    <div class="stat"><div class="stat-label">Jugados</div><div class="stat-value" style="font-family:'Space Mono',monospace">${pl}<small>/72</small></div></div>
-    <div class="stat"><div class="stat-label">Próximo partido</div><div class="stat-value" style="font-size:13px;padding-top:3px">${nextMatch()}</div></div>
-    <div class="stat"><div class="stat-label">Líder</div><div class="stat-value" style="font-size:15px">${sc[0].t>0?sc[0].name+' · '+sc[0].t+'pts':'Sin datos aún'}</div></div>
+  <div class="stats-grid-3">
+    <div class="stat"><div class="stat-label">Jugados</div><div class="stat-value">${pl}<small>/72</small></div></div>
+    <div class="stat"><div class="stat-label">Próximo</div><div class="stat-value sm">${nextMatch()}</div></div>
+    <div class="stat"><div class="stat-label">Líder</div><div class="stat-value sm">${sc[0].t>0?sc[0].name:'—'}</div></div>
   </div>
-  <div class="card"><table>
-    <thead><tr><th>#</th><th>Jugador</th><th style="text-align:right">Total</th><th style="text-align:center">Exactos</th><th style="text-align:center">Dif.Goles</th><th style="text-align:center">1X2</th><th style="text-align:center">Grupos</th><th style="text-align:center">Jugados</th></tr></thead>
-    <tbody>`;
+  <div class="card"><div class="rank-table">`;
+  const medals=['🥇','🥈','🥉',''];
   sc.forEach((p,i)=>{
-    const medals=['🥇','🥈','🥉',''];
     const diff=i>0?sc[i-1].t-p.t:0;
-    h+=`<tr>
-      <td style="font-size:15px">${medals[i]||`<span style="color:var(--muted)">${i+1}</span>`}</td>
-      <td style="font-weight:${i===0?700:400};color:${i===0?'var(--accent)':'var(--text)'}">${p.name}</td>
-      <td style="text-align:right"><span style="font-size:18px;font-weight:800;color:${i===0?'var(--accent)':'var(--text)'}">${p.t}</span>${diff>0?`<span style="font-size:10px;color:var(--muted);margin-left:4px">-${diff}</span>`:''}</td>
-      <td style="text-align:center"><span class="badge bgold">${p.e}</span></td>
-      <td style="text-align:center"><span class="badge bb">${p.diff}</span></td>
-      <td style="text-align:center"><span class="badge bg">${p.oxo}</span></td>
-      <td style="text-align:center"><span class="badge" style="background:rgba(232,255,60,0.12);color:var(--accent)">${p.gpts}</span></td>
-      <td style="text-align:center;color:var(--muted);font-family:'Space Mono',monospace">${p.pj}</td>
-    </tr>`;
+    h+=`<div class="rank-row">
+      <div class="rank-pos">${medals[i]||`<span style="font-size:12px;color:var(--muted)">${i+1}</span>`}</div>
+      <div style="flex:1;min-width:0">
+        <div class="rank-name" style="color:${i===0?'var(--accent)':'var(--text)'}">${p.name}${diff>0?`<span class="rank-diff">-${diff}pts</span>`:''}</div>
+        <div class="rank-detail">
+          <span class="badge bgold">🎯 ${p.e}</span>
+          <span class="badge bb">↕ ${p.diff}</span>
+          <span class="badge bg">✓ ${p.oxo}</span>
+          <span class="badge" style="background:rgba(232,255,60,0.1);color:var(--accent)">G+${p.gpts}</span>
+        </div>
+      </div>
+      <div class="rank-pts" style="color:${i===0?'var(--accent)':'var(--text)'}">${p.t}<span style="font-size:10px;font-weight:400;color:var(--muted)">pts</span></div>
+    </div>`;
   });
-  h+=`</tbody></table></div>`;
+  h+=`</div></div>`;
   document.getElementById('clas').innerHTML=h;
 }
 
-let fSt='all',fGr='all';
 function renderPart(){
   let h=`<div class="fb">
     <button class="${fSt==='all'?'act':''}" onclick="setFS('all')">Todos</button>
     <button class="${fSt==='played'?'act':''}" onclick="setFS('played')">Jugados</button>
     <button class="${fSt==='pending'?'act':''}" onclick="setFS('pending')">Pendientes</button>
-    <select onchange="setFG(this.value)">
+    <select onchange="setFG(this.value)" style="max-width:130px">
       <option value="all">Todos los grupos</option>
       ${'ABCDEFGHIJKL'.split('').map(g=>`<option value="${g}"${fGr===g?' selected':''}>Grupo ${g}</option>`).join('')}
     </select>
@@ -501,25 +570,30 @@ function renderPart(){
       if(fSt==='played')return done;if(fSt==='pending')return!done;return true;
     });
     if(!ms.length)return;
-    h+=`<div class="card"><div class="card-header">Grupo ${g}</div><table>
-      <thead><tr><th>Fecha</th><th>Local</th><th style="text-align:center;width:100px">Resultado</th><th>Visitante</th><th style="text-align:center">Estado</th></tr></thead><tbody>`;
+    h+=`<div class="match-card">`;
+    let lastDate='';
     ms.forEach(m=>{
       const r=getR(m.id);const done=r.h!==null&&r.a!==null;
-      h+=`<tr><td style="font-size:11px;color:var(--muted);font-family:'Space Mono',monospace">${fd(m.date)}</td>
-        <td style="font-weight:${done&&r.h>r.a?700:400}">${m.home}</td>
-        <td style="text-align:center"><div style="display:flex;align-items:center;justify-content:center;gap:4px">
+      if(m.date!==lastDate){
+        h+=`<div class="match-date-bar">Grupo ${g} · ${fd(m.date)}</div>`;
+        lastDate=m.date;
+      }
+      const hw=done&&r.h>r.a,aw=done&&r.a>r.h;
+      h+=`<div class="match-row">
+        <div class="match-team${hw?' win':''}">${m.home}</div>
+        <div class="match-score">
           <input class="si${done?' done':''}" type="number" min="0" max="20" value="${r.h!==null?r.h:''}" placeholder="—" onchange="setR('${m.id}','h',this.value)" onfocus="this.select()">
-          <span style="color:var(--muted)">:</span>
+          <span class="sep">:</span>
           <input class="si${done?' done':''}" type="number" min="0" max="20" value="${r.a!==null?r.a:''}" placeholder="—" onchange="setR('${m.id}','a',this.value)" onfocus="this.select()">
-        </div></td>
-        <td style="font-weight:${done&&r.a>r.h?700:400}">${m.away}</td>
-        <td style="text-align:center">${done?`<span class="badge bg">Final</span>`:`<span class="badge bk">Pendiente</span>`}</td>
-      </tr>`;
+        </div>
+        <div class="match-team away${aw?' win':''}">${m.away}</div>
+      </div>`;
     });
-    h+=`</tbody></table></div>`;
+    h+=`</div>`;
   });
   document.getElementById('part').innerHTML=h;
 }
+
 function setFS(v){fSt=v;renderPart()}
 function setFG(v){fGr=v;renderPart()}
 
@@ -529,84 +603,85 @@ function renderDet(){
   const pl=PLAYERS.find(x=>x.id===selP);
   const s=totalStats(pl.id);
   const hasPreds=MATCHES.some(m=>{const p=getP(pl.id,m.id);return p.h!==null&&p.a!==null;});
-  if(!hasPreds)h+=`<div class="empty-state">⚠️ ${pl.name} sin pronósticos — introdúcelos abajo</div>`;
+  if(!hasPreds)h+=`<div style="padding:20px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:10px;margin-bottom:12px;font-size:13px">⚠️ ${pl.name} sin pronósticos aún</div>`;
   h+=`<div class="stats-grid-4">
     <div class="stat"><div class="stat-label">Puntos</div><div class="stat-value" style="color:var(--accent)">${s.t}</div></div>
-    <div class="stat"><div class="stat-label">Exactos ×2</div><div class="stat-value">${s.e}</div></div>
-    <div class="stat"><div class="stat-label">Dif. goles ×1</div><div class="stat-value">${s.diff}</div></div>
-    <div class="stat"><div class="stat-label">1X2 ×1</div><div class="stat-value">${s.oxo}</div></div>
+    <div class="stat"><div class="stat-label">Exactos</div><div class="stat-value">${s.e}</div></div>
+    <div class="stat"><div class="stat-label">Dif. gol</div><div class="stat-value">${s.diff}</div></div>
+    <div class="stat"><div class="stat-label">1X2</div><div class="stat-value">${s.oxo}</div></div>
   </div>`;
   'ABCDEFGHIJKL'.split('').forEach(g=>{
     const ms=MATCHES.filter(m=>m.g===g);
-    h+=`<div class="card"><div class="card-header">Grupo ${g}</div><table>
-      <thead><tr><th>Fecha</th><th>Partido</th><th style="text-align:center">Real</th><th style="text-align:center;width:96px">Pronóstico</th><th style="text-align:center">Pts</th></tr></thead><tbody>`;
+    h+=`<div class="card"><div class="card-header">Grupo ${g}</div>`;
     ms.forEach(m=>{
       const r=getR(m.id),p=getP(pl.id,m.id);
       const hasR=r.h!==null&&r.a!==null;
       const pv=calcPts(pl.id,m.id);
-      h+=`<tr><td style="font-size:11px;color:var(--muted);font-family:'Space Mono',monospace">${fd(m.date)}</td>
-        <td style="font-size:12px">${m.home} vs ${m.away}</td>
-        <td style="text-align:center;font-weight:700;font-family:'Space Mono',monospace">${hasR?`${r.h}:${r.a}`:'<span style="color:var(--muted)">—</span>'}</td>
-        <td><div style="display:flex;align-items:center;justify-content:center;gap:3px">
+      let bc='bk',lbl='—';
+      if(pv===4){bc='bgold';lbl='+4';}else if(pv===3){bc='bg';lbl='+3';}else if(pv===2){bc='bb';lbl='+2';}else if(pv===1){bc='bb';lbl='+1';}else if(pv===0){bc='br';lbl='+0';}
+      h+=`<div class="det-row">
+        <div class="det-match">${m.home} vs ${m.away}</div>
+        <div class="det-real">${hasR?`${r.h}:${r.a}`:'<span style="color:var(--muted)">—</span>'}</div>
+        <div class="det-pred">
           <input class="si" type="number" min="0" max="20" value="${p.h!==null?p.h:''}" placeholder="—" onchange="setP('${pl.id}','${m.id}','h',this.value)" onfocus="this.select()">
-          <span style="color:var(--muted);font-size:11px">:</span>
+          <span class="sep" style="font-size:11px">:</span>
           <input class="si" type="number" min="0" max="20" value="${p.a!==null?p.a:''}" placeholder="—" onchange="setP('${pl.id}','${m.id}','a',this.value)" onfocus="this.select()">
-        </div></td>
-        <td style="text-align:center">${ptsBadge(pv)}</td></tr>`;
+        </div>
+        <div class="det-pts"><span class="badge ${bc}">${lbl}</span></div>
+      </div>`;
     });
-    h+=`</tbody></table></div>`;
+    h+=`</div>`;
   });
   document.getElementById('det').innerHTML=h;
 }
+
 function selPart(id){selP=id;renderDet();}
 
 function renderGrupo(){
-  let h=`<p style="font-size:12px;color:var(--muted);margin-bottom:16px;font-family:'Space Mono',monospace">Introduce el orden final real de cada grupo y los pronósticos de cada jugador. +1 punto por cada posición acertada.</p>`;
+  let h=`<p style="font-size:11px;color:var(--muted);margin-bottom:12px">Introduce el orden final real y los pronósticos. <strong style="color:var(--text)">+1 punto</strong> por cada posición acertada.</p>`;
   'ABCDEFGHIJKL'.split('').forEach(g=>{
     const teams=GROUPS[g];
-    h+=`<div class="card" style="margin-bottom:14px"><div class="card-header">Grupo ${g}</div>
-    <table><thead><tr>
-      <th>Equipo</th>
-      <th style="text-align:center">Pos. Real</th>
-      ${PLAYERS.map(p=>`<th style="text-align:center">${p.name}</th>`).join('')}
-      ${PLAYERS.map(p=>`<th style="text-align:center">Pts ${p.name}</th>`).join('')}
-    </tr></thead><tbody>`;
+    h+=`<div class="card" style="margin-bottom:10px"><div class="card-header">Grupo ${g}</div>
+    <div style="padding:8px 12px">
+      <div class="grupo-grid">
+        <div class="gh">Equipo</div>
+        <div class="gh">Real</div>
+        ${PLAYERS.map(p=>`<div class="gh">${p.name[0]}</div>`).join('')}
+      </div>`;
     teams.forEach(eq=>{
       const realPos=(S.grupoReal[g]||{})[eq]||'';
-      h+=`<tr><td style="font-weight:500">${eq}</td>
-        <td style="text-align:center">
-          <select onchange="setGrupoReal('${g}','${eq}',this.value)" style="width:50px;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:3px;font-family:'Space Mono',monospace;font-size:12px">
+      h+=`<div class="grupo-grid">
+        <div class="gr" style="font-size:11px;font-weight:500;padding-left:0">${eq}</div>
+        <div class="gr" style="justify-content:center">
+          <select onchange="setGrupoReal('${g}','${eq}',this.value)" style="width:36px;height:28px;text-align:center;border:1px solid var(--border);border-radius:5px;background:var(--surface2);color:var(--text);font-size:11px;font-family:'Space Mono',monospace;-webkit-appearance:none">
             <option value="">—</option>
             ${[1,2,3,4].map(n=>`<option value="${n}"${realPos==n?' selected':''}>${n}</option>`).join('')}
           </select>
-        </td>
+        </div>
         ${PLAYERS.map(p=>{
           const predPos=(S.grupoPreds[p.id]?.[g]||{})[eq]||'';
-          return`<td style="text-align:center">
-            <select onchange="setGrupoPred('${p.id}','${g}','${eq}',this.value)" style="width:50px;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:3px;font-family:'Space Mono',monospace;font-size:12px">
+          const rp=(S.grupoReal[g]||{})[eq];
+          const hit=rp&&predPos&&parseInt(rp)===parseInt(predPos);
+          const borderColor=rp?(hit?'rgba(60,255,184,0.5)':'rgba(255,92,92,0.4)'):'var(--border)';
+          return`<div class="gr" style="justify-content:center">
+            <select onchange="setGrupoPred('${p.id}','${g}','${eq}',this.value)" style="width:36px;height:28px;text-align:center;border:1px solid ${borderColor};border-radius:5px;background:${hit?'rgba(60,255,184,0.08)':'var(--surface2)'};color:var(--text);font-size:11px;font-family:'Space Mono',monospace;-webkit-appearance:none">
               <option value="">—</option>
               ${[1,2,3,4].map(n=>`<option value="${n}"${predPos==n?' selected':''}>${n}</option>`).join('')}
             </select>
-          </td>`;
+          </div>`;
         }).join('')}
-        ${PLAYERS.map(p=>{
-          const rp=(S.grupoReal[g]||{})[eq];
-          const pp=(S.grupoPreds[p.id]?.[g]||{})[eq];
-          const hit=rp&&pp&&parseInt(rp)===parseInt(pp);
-          return`<td style="text-align:center">${rp?`<span class="badge ${hit?'bg':'br'}">${hit?'+1':'0'}</span>`:`<span class="badge bk">—</span>`}</td>`;
-        }).join('')}
-      </tr>`;
+      </div>`;
     });
-    // Totales por grupo
-    h+=`<tr style="border-top:1px solid var(--border)">
-      <td colspan="2" style="font-size:11px;color:var(--muted);font-family:'Space Mono',monospace">TOTAL GRUPO ${g}</td>
-      ${PLAYERS.map(()=>`<td></td>`).join('')}
+    // Totals row
+    h+=`<div style="display:flex;align-items:center;padding:6px 0 2px;border-top:1px solid var(--border);margin-top:4px;gap:4px">
+      <span style="flex:1;font-size:9px;color:var(--muted);font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.06em">Total grupo</span>
+      <span style="width:36px"></span>
       ${PLAYERS.map(p=>{
         const gp=calcGrupoPts(p.id,g);
-        return`<td style="text-align:center"><span class="badge" style="background:rgba(232,255,60,0.12);color:var(--accent);font-weight:700">${gp!==null?'+'+gp:'—'}</span></td>`;
+        return`<span style="width:36px;text-align:center"><span class="badge" style="background:rgba(232,255,60,0.1);color:var(--accent);font-size:10px">${gp!==null?'+'+gp:'—'}</span></span>`;
       }).join('')}
-    </tr>`;
-    h+=`</tbody></table></div>`;
+    </div>
+    </div></div>`;
   });
   document.getElementById('grupo').innerHTML=h;
 }
