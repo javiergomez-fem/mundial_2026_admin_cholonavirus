@@ -186,7 +186,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-he
 <div class="toast" id="toast"></div>
 
 <script>
-const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxOycpdHhOqeJXkKEwSs-fWEWkpS2PqTFV5LYjvUOVIAQz_D9fxDKBDwJlpDG-qZioT/exec';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbyJmfM4A2l7U5up8zLQO7Tr3s0tmCIOt4gdYBjz_473u-OFhpaHo_-tzqPmT32T4iDu/exec';
 const PLAYERS=[{id:'javi',name:'Javi'},{id:'santi',name:'Santi'},{id:'kike',name:'Kike'},{id:'guille',name:'Guille'}];
 
 // Pronósticos de orden de grupo: cada jugador pronostica posición 1-4 de cada equipo
@@ -352,7 +352,7 @@ function parsePred(s){
   return{h:isNaN(h)?null:h,a:isNaN(a)?null:a};
 }
 
-let S=JSON.parse(localStorage.getItem('porra26v9')||'{}');
+let S=JSON.parse(localStorage.getItem('porra26v10')||'{}');
 if(!S.results)S.results={};
 if(!S.preds)S.preds={};
 if(!S.grupoPreds)S.grupoPreds={};
@@ -470,7 +470,7 @@ async function syncSheet(){
     });
 
     S.lastSync=new Date().toISOString();
-    localStorage.setItem('porra26v9',JSON.stringify(S));
+    localStorage.setItem('porra26v10',JSON.stringify(S));
     dot.className='sync-dot ok';
     const t=new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
     const nPart=Object.keys(S.results).length;
@@ -738,25 +738,25 @@ function renderGrupo(){
 function setGrupoReal(g,eq,val){
   if(!S.grupoReal[g])S.grupoReal[g]={};
   S.grupoReal[g][eq]=val===''?null:parseInt(val);
-  localStorage.setItem('porra26v9',JSON.stringify(S));refresh();
+  localStorage.setItem('porra26v10',JSON.stringify(S));refresh();
 }
 function setGrupoPred(pid,g,eq,val){
   if(!S.grupoPreds[pid])S.grupoPreds[pid]={};
   if(!S.grupoPreds[pid][g])S.grupoPreds[pid][g]={};
   S.grupoPreds[pid][g][eq]=val===''?null:parseInt(val);
-  localStorage.setItem('porra26v9',JSON.stringify(S));refresh();
+  localStorage.setItem('porra26v10',JSON.stringify(S));refresh();
 }
 
 function setR(id,side,val){
   if(!S.results[id])S.results[id]={h:null,a:null};
   S.results[id][side]=val===''?null:parseInt(val);
-  localStorage.setItem('porra26v9',JSON.stringify(S));refresh();
+  localStorage.setItem('porra26v10',JSON.stringify(S));refresh();
 }
 function setP(pid,mid,side,val){
   if(!S.preds[pid])S.preds[pid]={};
   if(!S.preds[pid][mid])S.preds[pid][mid]={h:null,a:null};
   S.preds[pid][mid][side]=val===''?null:parseInt(val);
-  localStorage.setItem('porra26v9',JSON.stringify(S));refresh();
+  localStorage.setItem('porra26v10',JSON.stringify(S));refresh();
 }
 function refresh(){
   const ai=[...document.querySelectorAll('.tab')].findIndex(t=>t.classList.contains('active'));
@@ -768,7 +768,7 @@ function showTab(name){
   document.getElementById(name).classList.add('active');
   if(name==='clas')renderClas();if(name==='part')renderPart();if(name==='det')renderDet();if(name==='grupo')renderGrupo();
 }
-function saveLocal(){localStorage.setItem('porra26v9',JSON.stringify(S));showToast('✓ Guardado');}
+function saveLocal(){localStorage.setItem('porra26v10',JSON.stringify(S));showToast('✓ Guardado');}
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
 
 renderClas();
